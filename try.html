@@ -23,7 +23,7 @@
         <th class="col-lg-3">Last name</th>
         </thead>
         <tbody>
-        <tr ng-repeat="User in Users">
+        <tr ng-repeat="User in Users.slice(start,quantity)">
             <td class="col-lg-3">{{User.userN}}</td>
             <td class="col-lg-3">{{User.PassW}}</td>
             <td class="col-lg-3">{{User.Name}}</td>
@@ -31,6 +31,23 @@
         </tr>
         </tbody>
     </table>
+    <ul class="pagination">
+        <li>
+            <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li ng-click="big()"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li>
+            <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
 </div>
 <script type="text/ng-template" id="table.html">
     <form ng-submit="okR()">

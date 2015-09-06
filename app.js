@@ -1,17 +1,32 @@
 app = angular.module('ui.bootstrap.demo', ['ngAnimate', 'ui.bootstrap']);
 app.controller('AppCtrl', function($scope, $modal, $log) {
     $scope.Users = [{
-        'userN': 'Ariel',
+        'userN': 'Ariel1',
         'PassW': 'Aa123456',
         'Name': 'Ariel',
         'LastName': 'Livshits'
     }, {
-        'userN': 'Ariel',
+        'userN': 'Ariel2',
         'PassW': 'Aa123456',
         'Name': 'Ariel',
         'LastName': 'Livshits'
     }, {
-        'userN': 'Ariel',
+        'userN': 'Ariel3',
+        'PassW': 'Aa123456',
+        'Name': 'Ariel',
+        'LastName': 'Livshits'
+    }, {
+        'userN': 'Ariel4',
+        'PassW': 'Aa123456',
+        'Name': 'Ariel',
+        'LastName': 'Livshits'
+    }, {
+        'userN': 'Ariel5',
+        'PassW': 'Aa123456',
+        'Name': 'Ariel',
+        'LastName': 'Livshits'
+    }, {
+        'userN': 'Ariel6',
         'PassW': 'Aa123456',
         'Name': 'Ariel',
         'LastName': 'Livshits'
@@ -22,7 +37,15 @@ app.controller('AppCtrl', function($scope, $modal, $log) {
         'Password': '',
         'connected': false
     };
-
+    $scope.orderProp = 'userN';
+    $scope.quantity = 3;
+    $scope.start = 0;
+    $scope.big = function () {
+        if($scope.quantity*2 <= $scope.Users.length) {
+            $scope.start += 3;
+            $scope.quantity *= 2;
+        }
+    }
     $scope.openR = function() {
 
         var modalInstance = $modal.open({
@@ -74,3 +97,4 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance) {
         $modalInstance.dismiss('cancel');
     };
 });
+
