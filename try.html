@@ -37,9 +37,9 @@
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
-        <li ng-click="big()"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
+        <li ng-click="start=0;quantity=3"><a href="#">1</a></li>
+        <li ng-click="start=3;quantity=6"><a href="#">2</a></li>
+        <li ng-show="Users.length <= 9 && Users.length > 6" ng-click="start=6;quantity=9"><a href="#">3</a></li>
         <li><a href="#">4</a></li>
         <li><a href="#">5</a></li>
         <li>
