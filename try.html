@@ -23,7 +23,7 @@
         <th class="col-lg-3">Last name</th>
         </thead>
         <tbody>
-        <tr ng-repeat="User in Users.slice(start,quantity)">
+        <tr ng-repeat="User in Users.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
             <td class="col-lg-3">{{User.userN}}</td>
             <td class="col-lg-3">{{User.PassW}}</td>
             <td class="col-lg-3">{{User.Name}}</td>
@@ -31,23 +31,9 @@
         </tr>
         </tbody>
     </table>
-    <ul class="pagination">
-        <li>
-            <a href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <li ng-click="start=0;quantity=3"><a href="#">1</a></li>
-        <li ng-click="start=3;quantity=6"><a href="#">2</a></li>
-        <li ng-show="Users.length <= 9 && Users.length > 6" ng-click="start=6;quantity=9"><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li>
-            <a href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
+    <div >
+        <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm" items-per-page="itemsPerPage"></pagination>
+    </div>
 </div>
 <script type="text/ng-template" id="table.html">
     <form ng-submit="okR()">

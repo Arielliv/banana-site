@@ -1,5 +1,5 @@
 app = angular.module('ui.bootstrap.demo', ['ngAnimate', 'ui.bootstrap']);
-app.controller('AppCtrl', function($scope, $modal, $log) {
+app.controller('AppCtrl', function($scope, $modal, $log ) {
     $scope.Users = [{
         'userN': 'Ariel1',
         'PassW': 'Aa123456',
@@ -30,6 +30,16 @@ app.controller('AppCtrl', function($scope, $modal, $log) {
         'PassW': 'Aa123456',
         'Name': 'Ariel',
         'LastName': 'Livshits'
+    }, {
+        'userN': 'Ariel6',
+        'PassW': 'Aa123456',
+        'Name': 'Ariel',
+        'LastName': 'Livshits'
+    }, {
+        'userN': 'Ariel6',
+        'PassW': 'Aa123456',
+        'Name': 'Ariel',
+        'LastName': 'Livshits'
     }];
 
     $scope.User = {
@@ -37,15 +47,28 @@ app.controller('AppCtrl', function($scope, $modal, $log) {
         'Password': '',
         'connected': false
     };
-    $scope.orderProp = 'userN';
-    $scope.quantity = 3;
-    $scope.start = 0;
-    $scope.big = function () {
-        if($scope.quantity*2 <= $scope.Users.length) {
-            $scope.start += 3;
-            $scope.quantity *= 2;
-        }
-    }
+
+
+    $scope.viewby = 3;
+    $scope.totalItems = $scope.Users.length;
+    $scope.currentPage = 1;
+    $scope.itemsPerPage = $scope.viewby;
+    $scope.maxSize = ($scope.Users.length / 3) + 1; //Number of pager buttons to show
+
+    $scope.setPage = function (pageNo) {
+        $scope.currentPage = pageNo;
+    };
+
+    $scope.pageChanged = function() {
+        console.log('Page changed to: ' + $scope.currentPage);
+    };
+
+    $scope.setItemsPerPage = function(num) {
+        $scope.itemsPerPage = num;
+        $scope.currentPage = 1; //reset to first paghe
+    };
+
+
     $scope.openR = function() {
 
         var modalInstance = $modal.open({
