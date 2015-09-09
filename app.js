@@ -41,7 +41,9 @@ app.controller('AppCtrl', function($scope, $modal, $log ) {
         'Name': 'Ariel',
         'LastName': 'Livshits'
     }];
-
+    $scope.saveUsers = function() {window.localStorage.setItem("tableData", JSON.stringify($scope.Users));};
+    $scope.Users = JSON.parse(window.localStorage.getItem("tableData"));
+    $scope.saveNewUser = function(newUser) { window.localStorage.setItem("newUser", JSON.stringify(newUser));};
     $scope.User = {
         'username': '',
         'Password': '',
@@ -52,7 +54,6 @@ app.controller('AppCtrl', function($scope, $modal, $log ) {
     $scope.currentPage = 1;
     $scope.itemsPerPage = $scope.viewby;
     $scope.maxSize = (($scope.Users.length / 3) + 1) ; //Number of pager buttons to show
-
     $scope.setPage = function (pageNo) {
         $scope.currentPage = pageNo;
     };
@@ -99,10 +100,10 @@ app.controller('AppCtrl', function($scope, $modal, $log ) {
 app.controller('ModalInstanceCtrl', function($scope, $modalInstance) {
     $scope.okR = function() {
         $modalInstance.close({
-            'userN': $scope.userN,
-            'PassW': $scope.PassW,
-            'Name': $scope.Name,
-            'LastName': $scope.LastName
+            'userN': $scope.newUser.userN,
+            'PassW': $scope.newUser.PassW,
+            'Name': $scope.newUser.Name,
+            'LastName': $scope.newUser.LastName
         });
     };
 
