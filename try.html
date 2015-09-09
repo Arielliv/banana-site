@@ -11,7 +11,7 @@
 
 <body>
 
-<div ng-controller="AppCtrl">
+<div ng-controller="AppCtrl" >
     <button type="button" class="btn btn-default" ng-click="openR()"> add user </button>
     <button type="button" class="btn btn-default" ng-click="openC()"> connect </button>
     <div class="btn btn-success" ng-show="User.connected">{{User.username}} is connected</div>
@@ -31,8 +31,8 @@
         </tr>
         </tbody>
     </table>
-    <div >
-        <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm" items-per-page="itemsPerPage"></pagination>
+    <div>
+        <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages" items-per-page="itemsPerPage"></pagination>
     </div>
 </div>
 <script type="text/ng-template" id="table.html">

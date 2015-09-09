@@ -47,13 +47,11 @@ app.controller('AppCtrl', function($scope, $modal, $log ) {
         'Password': '',
         'connected': false
     };
-
-
     $scope.viewby = 3;
     $scope.totalItems = $scope.Users.length;
     $scope.currentPage = 1;
     $scope.itemsPerPage = $scope.viewby;
-    $scope.maxSize = ($scope.Users.length / 3) + 1; //Number of pager buttons to show
+    $scope.maxSize = (($scope.Users.length / 3) + 1) ; //Number of pager buttons to show
 
     $scope.setPage = function (pageNo) {
         $scope.currentPage = pageNo;
@@ -120,4 +118,5 @@ app.controller('ModalInstanceCtrl', function($scope, $modalInstance) {
         $modalInstance.dismiss('cancel');
     };
 });
+
 
