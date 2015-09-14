@@ -14,25 +14,35 @@
 <div ng-controller="AppCtrl" >
     <button type="button" class="btn btn-default" ng-click="openR()"> add user </button>
     <button type="button" class="btn btn-default" ng-click="openC()"> connect </button>
-    <div class="btn btn-success" ng-show="User.connected">{{User.username}} is connected</div>
+    <div class="btn btn-success" ng-show="User.connected">{{User.userName}} is connected</div>
     <table>
         <thead>
-        <th class="col-lg-3">Username</th>
-        <th class="col-lg-3">Password</th>
-        <th class="col-lg-3">First name</th>
-        <th class="col-lg-3">Last name</th>
+        <th class="col-lg-1">Username</th>
+        <th class="col-lg-1">Password</th>
+        <th class="col-lg-1">First name</th>
+        <th class="col-lg-1">Last name</th>
+        <th class="col-lg-1">index</th>
+        <th class="col-lg-1">count Connect</th>
+        <th class="col-lg-1">count Paging</th>
+        <th class="col-lg-1">count Order</th>
+        <th class="col-lg-1">count Tap Name</th>
         </thead>
         <tbody>
-        <tr ng-repeat="User in Users.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
-            <td class="col-lg-3">{{User.userN}}</td>
-            <td class="col-lg-3">{{User.PassW}}</td>
-            <td class="col-lg-3">{{User.Name}}</td>
-            <td class="col-lg-3">{{User.LastName}}</td>
+        <tr ng-repeat="user in Users.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+            <td class="col-lg-1">{{user.userName}}</td>
+            <td class="col-lg-1">{{user.PassWord}}</td>
+            <td class="col-lg-1">{{user.Name}}</td>
+            <td class="col-lg-1">{{user.LastName}}</td>
+            <td class="col-lg-1">{{$index}}</td>
+            <td class="col-lg-1">{{user.countConnect}}</td>
+            <td class="col-lg-1">{{user.countPaging}}</td>
+            <td class="col-lg-1">{{user.countOrder}}</td>
+            <td class="col-lg-1">{{user.countTapName}}</td>
         </tr>
         </tbody>
     </table>
     <div>
-        <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages" items-per-page="itemsPerPage"></pagination>
+        <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages" ng-click="pageChanged(user)" items-per-page="itemsPerPage"></pagination>
     </div>
 </div>
 <script type="text/ng-template" id="table.html">
@@ -44,19 +54,19 @@
             <div class="panel-body">
                 <div class="form-group">
                     <label>Username :</label>
-                    <input type="text" placeholder="Ariel73" ng-model="newUser.userN">
+                    <input type="text" placeholder="Ariel73" ng-model="userN">
                 </div>
                 <div class="form-group">
                     <label>Password :</label>
-                    <input type="text" placeholder="Aa123456" ng-model="newUser.PassW">
+                    <input type="text" placeholder="Aa123456" ng-model="PassW">
                 </div>
                 <div class="form-group">
                     <label>First name :</label>
-                    <input type="text" placeholder="Ariel" ng-model="newUser.Name">
+                    <input type="text" placeholder="Ariel" ng-model="Name">
                 </div>
                 <div class="form-group">
                     <label>Last name :</label>
-                    <input type="text" placeholder="Livshits" ng-model="newUser.LastName">
+                    <input type="text" placeholder="Livshits" ng-model="LastName">
                 </div>
             </div>
             <div class="modal-footer">

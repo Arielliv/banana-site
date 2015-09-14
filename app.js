@@ -1,53 +1,46 @@
-app = angular.module('ui.bootstrap.demo', ['ngAnimate', 'ui.bootstrap']);
-app.controller('AppCtrl', function($scope, $modal, $log ) {
-    $scope.Users = [{
-        'userN': 'Ariel1',
-        'PassW': 'Aa123456',
-        'Name': 'Ariel',
-        'LastName': 'Livshits'
-    }, {
-        'userN': 'Ariel2',
-        'PassW': 'Aa123456',
-        'Name': 'Ariel',
-        'LastName': 'Livshits'
-    }, {
-        'userN': 'Ariel3',
-        'PassW': 'Aa123456',
-        'Name': 'Ariel',
-        'LastName': 'Livshits'
-    }, {
-        'userN': 'Ariel4',
-        'PassW': 'Aa123456',
-        'Name': 'Ariel',
-        'LastName': 'Livshits'
-    }, {
-        'userN': 'Ariel5',
-        'PassW': 'Aa123456',
-        'Name': 'Ariel',
-        'LastName': 'Livshits'
-    }, {
-        'userN': 'Ariel6',
-        'PassW': 'Aa123456',
-        'Name': 'Ariel',
-        'LastName': 'Livshits'
-    }, {
-        'userN': 'Ariel6',
-        'PassW': 'Aa123456',
-        'Name': 'Ariel',
-        'LastName': 'Livshits'
-    }, {
-        'userN': 'Ariel6',
-        'PassW': 'Aa123456',
-        'Name': 'Ariel',
-        'LastName': 'Livshits'
-    }];
-    $scope.saveUsers = function() {window.localStorage.setItem("tableData", JSON.stringify($scope.Users));};
-    $scope.Users = JSON.parse(window.localStorage.getItem("tableData"));
-    $scope.saveNewUser = function(newUser) { window.localStorage.setItem("newUser", JSON.stringify(newUser));};
+angular.module('ionic.utils', [])
+
+    .factory('$localstorage', ['$window', function($window) {
+        return {
+            set: function(key, value) {
+                $window.localStorage[key] = value;
+            },
+            get: function(key, defaultValue) {
+                return $window.localStorage[key] || defaultValue;
+            },
+            setObject: function(key, value) {
+                $window.localStorage[key] = JSON.stringify(value);
+            },
+            getObject: function(key) {
+                return JSON.parse($window.localStorage[key] || '{}');
+            }
+        }
+    }]);
+
+
+app = angular.module('ui.bootstrap.demo', ['ngAnimate', 'ui.bootstrap' , 'ionic.utils']);
+app.controller('AppCtrl', function($scope, $modal, $log, $localstorage, $filter) {
     $scope.User = {
         'username': '',
         'Password': '',
-        'connected': false
+        'connected': false,
+        'countConnect': 0,
+        'countPaging':0,
+        'countOrder':0,
+        'countTapName':0
+    };
+    if(window.localStorage.getItem('a')){
+        $scope.Users = $localstorage.getObject('a');
+        console.log($scope.Users);
+    }
+    else{
+        $scope.Users = [{}];
+        console.log($scope.Users);
+    }
+    $scope.tapName = function(User){ User.countTapName ++; };
+
+    $scope.countOrder = function (User){
+        User.countOrder++;
     };
     $scope.viewby = 3;
     $scope.totalItems = $scope.Users.length;
@@ -58,8 +51,9 @@ app.controller('AppCtrl', function($scope, $modal, $log ) {
         $scope.currentPage = pageNo;
     };
 
-    $scope.pageChanged = function() {
+    $scope.pageChanged = function(User) {
         console.log('Page changed to: ' + $scope.currentPage);
+        $scope.User.countPaging ++;
     };
 
     $scope.setItemsPerPage = function(num) {
@@ -76,6 +70,7 @@ app.controller('AppCtrl', function($scope, $modal, $log ) {
         });
         modalInstance.result.then(function(newUser) {
             $scope.Users.push(newUser);
+            $localstorage.setObject('a',$scope.Users);
         }, function() {
             $log.info('Modal dismissed at: ' + new Date());
         });
@@ -87,7 +82,15 @@ app.controller('AppCtrl', function($scope, $modal, $log ) {
             controller: 'ModalInstanceCtrl'
         });
         modalInstance.result.then(function(conUser) {
-            $scope.User = conUser;
+            conUser.countConnect++;
+            $localstorage.setObject('a',$scope.Users);
+            $scope.User = $filter('filter')($scope.Users, { userName: "a"})[0];
+            console.log($scope.User.userName);
+            $scope.User.connected = 'true';
+            $scope.User.countConnect ++;
+            $localstorage.setObject('a',$scope.Users);
+            //// $scope.Users.push(conUser);
+
         }, function() {
             $log.info('Modal dismissed at: ' + new Date());
         });
@@ -100,18 +103,20 @@ app.controller('AppCtrl', function($scope, $modal, $log ) {
 app.controller('ModalInstanceCtrl', function($scope, $modalInstance) {
     $scope.okR = function() {
         $modalInstance.close({
-            'userN': $scope.newUser.userN,
-            'PassW': $scope.newUser.PassW,
-            'Name': $scope.newUser.Name,
-            'LastName': $scope.newUser.LastName
+            'userName': $scope.userN,
+            'PassWord': $scope.PassW,
+            'Name': $scope.Name,
+            'LastName': $scope.LastName,
+            'connected': false,
+            'countConnect': 0,
+            'countPaging':0,
+            'countOrder':0,
+            'countTapName':0
         });
     };
 
     $scope.okC = function() {
         $modalInstance.close({
-            'username': $scope.username,
-            'Password': $scope.password,
-            'connected': true
         });
     };
 
