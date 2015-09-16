@@ -38,8 +38,8 @@ app.controller('AppCtrl', function($scope, $modal, $log, $localstorage, $filter)
         console.log($scope.Users);
     }
     $scope.tapName = function(user){
-
-            user.countTapName ++;
+    if(user.userName == $scope.User.userName){
+            user.countTapName ++;}
 
     };
 
