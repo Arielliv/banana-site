@@ -29,7 +29,7 @@
         </thead>
         <tbody>
         <tr ng-repeat="user in Users.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
-            <td class="col-lg-1">{{user.userName}}</td>
+            <td class="col-lg-1" ng-click="tapName(user)">{{user.userName}}</td>
             <td class="col-lg-1">{{user.PassWord}}</td>
             <td class="col-lg-1">{{user.Name}}</td>
             <td class="col-lg-1">{{user.LastName}}</td>

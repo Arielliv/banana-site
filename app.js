@@ -37,7 +37,11 @@ app.controller('AppCtrl', function($scope, $modal, $log, $localstorage, $filter)
         $scope.Users = [{}];
         console.log($scope.Users);
     }
-    $scope.tapName = function(User){ User.countTapName ++; };
+    $scope.tapName = function(user){
+
+            user.countTapName ++;
+
+    };
 
     $scope.countOrder = function (User){
         User.countOrder++;
