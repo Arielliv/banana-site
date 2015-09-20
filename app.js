@@ -29,6 +29,7 @@ app.controller('AppCtrl', function($scope, $modal, $log, $localstorage, $filter)
         'countOrder':0,
         'countTapName':0
     };
+
     if(window.localStorage.getItem('a')){
         $scope.Users = $localstorage.getObject('a');
         console.log($scope.Users);
@@ -86,14 +87,30 @@ app.controller('AppCtrl', function($scope, $modal, $log, $localstorage, $filter)
             controller: 'ModalInstanceCtrl'
         });
         modalInstance.result.then(function(conUser) {
-            conUser.countConnect++;
-            $localstorage.setObject('a',$scope.Users);
-            $scope.User = $filter('filter')($scope.Users, { userName: "a"})[0];
-            console.log($scope.User.userName);
-            $scope.User.connected = 'true';
-            $scope.User.countConnect ++;
-            $localstorage.setObject('a',$scope.Users);
-            //// $scope.Users.push(conUser);
+            var promise = new Promise(function(resolve, reject) {
+                // do a thing, possibly async, then…
+
+                if ($filter('filter')($scope.Users, { userName: "h"})[0]) {
+                    resolve("Stuff worked!",
+                    conUser.countConnect++,
+                    $localstorage.setObject('a',$scope.Users),
+                    $scope.User = $filter('filter')($scope.Users, { userName: "a"})[0],
+                    console.log($scope.User.userName),
+                    $scope.User.connected = 'true',
+                    $scope.User.countConnect ++,
+                    $localstorage.setObject('a',$scope.Users)
+                    //// $scope.Users.push(conUser);
+                    );
+                }
+                else {
+                    reject(Error("It broke"));
+                }
+            });
+            promise.then(function(result) {
+                console.log(result); // "Stuff worked!"
+            }, function(err) {
+                console.log(err); // Error: "It broke"
+            });
 
         }, function() {
             $log.info('Modal dismissed at: ' + new Date());
