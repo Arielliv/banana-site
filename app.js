@@ -19,25 +19,18 @@ angular.module('ionic.utils', [])
 
 
 app = angular.module('ui.bootstrap.demo', ['ngAnimate', 'ui.bootstrap' , 'ionic.utils']);
-app.controller('AppCtrl', function($scope, $modal, $log, $localstorage, $filter) {
-    $scope.User = {
-        'username': '',
-        'Password': '',
-        'connected': false,
-        'countConnect': 0,
-        'countPaging':0,
-        'countOrder':0,
-        'countTapName':0
-    };
-
-    if(window.localStorage.getItem('a')){
-        $scope.Users = $localstorage.getObject('a');
+app.controller('AppCtrl', function($scope, $modal, $localstorage, $filter) {
+    if(window.localStorage.getItem('f')){
+        $scope.Users = $localstorage.getObject('f');
         console.log($scope.Users);
     }
     else{
         $scope.Users = [{}];
         console.log($scope.Users);
     }
+    $scope.User = {
+
+    };
     $scope.tapName = function(user){
     if(user.userName == $scope.User.userName){
             user.countTapName ++;}
@@ -47,13 +40,17 @@ app.controller('AppCtrl', function($scope, $modal, $log, $localstorage, $filter)
     $scope.countOrder = function (User){
         User.countOrder++;
     };
-    $scope.viewby = 3;
+
     $scope.totalItems = $scope.Users.length;
     $scope.currentPage = 1;
-    $scope.itemsPerPage = $scope.viewby;
+    $scope.itemsPerPage = 3;
     $scope.maxSize = (($scope.Users.length / 3) + 1) ; //Number of pager buttons to show
     $scope.setPage = function (pageNo) {
         $scope.currentPage = pageNo;
+    };
+
+    $scope.pageChange = function(pageNo) {
+        $scope.totalItems = pageNo;
     };
 
     $scope.pageChanged = function(User) {
@@ -71,40 +68,37 @@ app.controller('AppCtrl', function($scope, $modal, $log, $localstorage, $filter)
 
         var modalInstance = $modal.open({
             templateUrl: 'table.html',
-            controller: 'ModalInstanceCtrl'
+            controller: 'RegisterModalController'
         });
         modalInstance.result.then(function(newUser) {
             $scope.Users.push(newUser);
-            $localstorage.setObject('a',$scope.Users);
-        }, function() {
-            $log.info('Modal dismissed at: ' + new Date());
+            $localstorage.setObject('f',$scope.Users);
+            $scope.$watch('totalItems', function(newValue, oldValue) {
+                $scope.pageChange($scope.Users.length);
+            });
         });
     };
     $scope.openC = function() {
 
         var modalInstance = $modal.open({
             templateUrl: 'connect.html',
-            controller: 'ModalInstanceCtrl'
+            controller: 'ConnectModalController'
         });
         modalInstance.result.then(function(conUser) {
             var promise = new Promise(function(resolve, reject) {
-                // do a thing, possibly async, then…
+                // do f thing, possibly async, then…
+                resolve("Stuff worked!",
+                conUser.countConnect++,
+                $localstorage.setObject('f',$scope.Users),
+                $scope.User = $filter('filter')($scope.Users, { userName: conUser.u})[0],
+                console.log($scope.User.userName),
+                $scope.User.connected = 'true',
+                $scope.User.countConnect ++,
+                $localstorage.setObject('f',$scope.Users)
+                //// $scope.Users.push(conUser);
+                );
 
-                if ($filter('filter')($scope.Users, { userName: "h"})[0]) {
-                    resolve("Stuff worked!",
-                    conUser.countConnect++,
-                    $localstorage.setObject('a',$scope.Users),
-                    $scope.User = $filter('filter')($scope.Users, { userName: "a"})[0],
-                    console.log($scope.User.userName),
-                    $scope.User.connected = 'true',
-                    $scope.User.countConnect ++,
-                    $localstorage.setObject('a',$scope.Users)
-                    //// $scope.Users.push(conUser);
-                    );
-                }
-                else {
-                    reject(Error("It broke"));
-                }
+                reject(Error("It broke"));
             });
             promise.then(function(result) {
                 console.log(result); // "Stuff worked!"
@@ -112,38 +106,15 @@ app.controller('AppCtrl', function($scope, $modal, $log, $localstorage, $filter)
                 console.log(err); // Error: "It broke"
             });
 
-        }, function() {
-            $log.info('Modal dismissed at: ' + new Date());
         });
     };
 });
 
-// Please note that $modalInstance represents a modal window (instance) dependency.
+// Please note that $modalInstance represents n modal window (instance) dependency.
 // It is not the same as the $modal service used above.
 
-app.controller('ModalInstanceCtrl', function($scope, $modalInstance) {
-    $scope.okR = function() {
-        $modalInstance.close({
-            'userName': $scope.userN,
-            'PassWord': $scope.PassW,
-            'Name': $scope.Name,
-            'LastName': $scope.LastName,
-            'connected': false,
-            'countConnect': 0,
-            'countPaging':0,
-            'countOrder':0,
-            'countTapName':0
-        });
-    };
 
-    $scope.okC = function() {
-        $modalInstance.close({
-        });
-    };
 
-    $scope.cancel = function() {
-        $modalInstance.dismiss('cancel');
-    };
-});
+
 
 

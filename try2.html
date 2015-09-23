@@ -1,0 +1,105 @@
+<!doctype html>
+<html ng-app="ui.bootstrap.demo">
+
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.3.js"></script>
+    <script src="app.js"></script>
+    <script src="ConnectModalController.js"></script>
+    <script src="RegisterModalController.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body ng-controller="AppCtrl">
+
+<div  >
+    <button type="button" class="btn btn-default" ng-click="openR()"> add user </button>
+    <button type="button" class="btn btn-default" ng-click="openC()"> connect </button>
+    <div class="btn btn-success" ng-show="User.connected">{{User.userName}} is connected</div>
+    <table>
+        <thead>
+        <th class="col-lg-1">Username</th>
+        <th class="col-lg-1">Password</th>
+        <th class="col-lg-1">First name</th>
+        <th class="col-lg-1">Last name</th>
+        <th class="col-lg-1">index</th>
+        <th class="col-lg-1">count Connect</th>
+        <th class="col-lg-1">count Paging</th>
+        <th class="col-lg-1">count Order</th>
+        <th class="col-lg-1">count Tap Name</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in Users.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+            <td class="col-lg-1" ng-click="tapName(user)">{{user.userName}}</td>
+            <td class="col-lg-1">{{user.PassWord}}</td>
+            <td class="col-lg-1">{{user.Name}}</td>
+            <td class="col-lg-1">{{user.LastName}}</td>
+            <td class="col-lg-1">{{$index}}</td>
+            <td class="col-lg-1">{{user.countConnect}}</td>
+            <td class="col-lg-1">{{user.countPaging}}</td>
+            <td class="col-lg-1">{{user.countOrder}}</td>
+            <td class="col-lg-1">{{user.countTapName}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" class="pagination-md" boundary-links="true" rotate="false" num-pages="numPages" ng-click="pageChanged(user)" items-per-page="itemsPerPage"></pagination>
+    </div>
+</div>
+<script type="text/ng-template" id="table.html">
+    <form ng-submit="okR()">
+        <div class="modal-header" >
+            <h3>users</h3>
+        </div>
+        <div class="modal-body">
+            <div class="panel-body">
+                <div class="form-group">
+                    <label>Username :</label>
+                    <input type="text" placeholder="Ariel73" ng-model="userN">
+                </div>
+                <div class="form-group">
+                    <label>Password :</label>
+                    <input type="text" placeholder="Aa123456" ng-model="PassW">
+                </div>
+                <div class="form-group">
+                    <label>First name :</label>
+                    <input type="text" placeholder="Ariel" ng-model="Name">
+                </div>
+                <div class="form-group">
+                    <label>Last name :</label>
+                    <input type="text" placeholder="Livshits" ng-model="LastName">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" ng-click="saveUsers();saveUsers()" class="btn btn-success">Submit</button>
+            </div>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="connect.html">
+    <form ng-submit="okC()">
+        <div class="modal-header" >
+            <h3>users</h3>
+        </div>
+        <div class="modal-body">
+            <div class="panel-body">
+                <div class="form-group">
+                    <label>Username :</label>
+                    <input type="text" placeholder="Ariel73" ng-model="username">
+                </div>
+                <div class="form-group">
+                    <label>Password :</label>
+                    <input type="text" placeholder="Aa123456" ng-model="password">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit"  class="btn btn-success">Submit</button>
+                <button ng-click="openR()"  class="btn btn-primary">Reg</button>
+            </div>
+        </div>
+    </form>
+</script>
+</body>
+
+</html>

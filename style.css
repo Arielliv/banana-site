@@ -1,109 +1,49 @@
-* {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 0px;
-    margin: 0px;
-}
-html {
-    background: url("images/3.jpg") no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+
+div.m-modals {
+    background-color: rgba( 0, 0, 0, 0.8 ) ;
+    bottom: 0px ;
+    left: 0px ;
+    position: fixed ;
+    right: 0px ;
+    top: 0px ;
 }
 
-.navbar-inverse {
-    border-bottom: 2px dodgerblue solid;
-    box-shadow: 10px 5px 10px #888888;
-    border-radius: 0px;
-    background: #3a3a3a;
+div.m-modals.ng-hide {
+    background-color: rgba( 0, 0, 0, 0 );
 }
 
-.navbar-inverse > .container-fluid > .navbar-header > .navbar-brand{
-    color: dodgerblue;
+div.m-modals.ng-hide-add.ng-hide-add-active,
+div.m-modals.ng-hide-remove.ng-hide-remove-active {
+    transition: 250ms ease all ;
 }
 
-.navbar-btn{
-    background-color: dodgerblue ;
-    color: white;
+div.m-modals > .modal {
+    background-color: #FAFAFA ;
+    border-radius: 3px 3px 3px 3px ;
+    box-sizing: border-box ;
+    -moz-box-sizing: border-box ;
+    padding: 20px 20px 20px 20px ;
+    position: fixed ;
+    left: 50% ;
+    margin-left: -200px ;
+    top: 200px ;
+    width: 400px ;
 }
 
-.navbar-btn:hover{
-    background-color: royalblue;
-    color:white;
-}
-.row > .panel > .panel-heading > .panel-title {
-    color: white;
-    font-size: 26px;
+div.m-modals.ng-hide > .modal.ng-enter {
+    top: -200px ;
+    transition: 250ms ease top ;
 }
 
-.btn-costume{
-    background-color:transparent !important;
-    padding: 0;
-    border: 0;
-    color: dodgerblue;
+div.m-modals.ng-hide > .modal.ng-enter.ng-enter-active {
+    top: 200px ;
 }
 
-.btn-costume:hover{
-    color: royalblue;
-
-}
-.row > .panel > .panel-heading {
-    background: #3a3a3a;
+a.jump {
+    color: #999999 ;
 }
 
-.form-horizontal{
-    padding: 0;
+a.jump:hover {
+    background-color: gold ;
+    color: #000000 ;
 }
-
-.panel-costume{
-    padding-right: 0px;
-    padding-left: 0px;
-    box-shadow: 10px 5px 10px #888888;
-    top:150px;
-}
-.body-costume{
-    background-color:transparent !important;
-}
-
-.form-group{
-    padding: 15px;
-    margin-bottom: 0;
-}
-.panel-default > .panel-heading {
-    background-color: #3a3a3a;
-}
-
-.panel-body{
-    padding: 0;
-}
-
-.panel-footer{
-    width: 100%;
-    background-color: dodgerblue;
-    color: white;
-}
-
-.panel-footer:hover{
-    background-color: royalblue;
-    color: white;
-}
-
-.after-login{
-    display: block;
-    position: fixed;
-    top: 175px;
-}
-
-.table-head-costume{
-    background: dodgerblue;
-    color: white;
-    font-size: 26px;
-}
-.table-costume{
-    background-color: white;
-    border-radius: 3px;
-    box-shadow: 10px 5px 10px #888888;
-}
-
